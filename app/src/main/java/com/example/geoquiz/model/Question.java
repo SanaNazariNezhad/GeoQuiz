@@ -1,6 +1,8 @@
 package com.example.geoquiz.model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     private int mQuestionTextResId;
     private boolean mIsAnswerTrue;
     private int mDisableBtn = 0;
@@ -13,7 +15,6 @@ public class Question {
     public void setDisableBtn(int disableBtn) {
         this.mDisableBtn = disableBtn;
     }
-
 
 
     public int getQuestionTextResId() {
@@ -35,6 +36,7 @@ public class Question {
     public Question(int questionTextResId, boolean isAnswerTrue) {
         mQuestionTextResId = questionTextResId;
         mIsAnswerTrue = isAnswerTrue;
+//        mNumberOfQuestion ++ ;
     }
 
     public Question() {

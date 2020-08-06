@@ -2,9 +2,11 @@ package com.example.geoquiz.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.R;
 
+import java.io.Serializable;
+import java.time.Instant;
+
 public class QuizActivity extends AppCompatActivity {
+
+    private static final String TAG = "QuizActivity";
+    private static final String BUNDLE_KEY_CURRENT_INDEX = "currentIndex";
+    private static final String BUNDLE_KEY_SCORE_NUMBER = "scoreNumber";
+    private static final String BUNDLE_KEY_QUESTION_BANK = "questionBank";
 
     private Button mButtonTrue;
     private Button mButtonFalse;
@@ -29,20 +40,14 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mImageButtonReset;
     private TextView mTextViewQuestion;
     private TextView mScoreNumber;
+    private String mScoreValue = "0";
     private TextView mScoreNumberGameOver;
     private LinearLayout mLinearLayoutMain;
     private LinearLayout mLinearLayoutGameOver;
-    private Activity mActivity;
 
     private int mCurrentIndex = 0;
-    private Question[] mQuestionBank = {
-            new Question(R.string.question_australia, false),
-            new Question(R.string.question_oceans, true),
-            new Question(R.string.question_mideast, false),
-            new Question(R.string.question_africa, true),
-            new Question(R.string.question_americas, false),
-            new Question(R.string.question_asia, false)
-    };
+    private Question[] mQuestionBank = setQuestion();
+
 
     /**
      * This method is used to crete ui for activity.
@@ -53,15 +58,32 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            Log.d(TAG, "savedInstanceState: " + savedInstanceState);
+            mQuestionBank = (Question[]) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
+            mCurrentIndex = savedInstanceState.getInt(BUNDLE_KEY_CURRENT_INDEX, 0);
+            mScoreValue = savedInstanceState.getString(BUNDLE_KEY_SCORE_NUMBER);
+
+            /*int score = savedInstanceState.getInt(BUNDLE_KEY_SCORE_NUMBER);
+            mScoreNumber.setText("" + score);*/
+            /*CharSequence charSequenceScore = savedInstanceState.getCharSequence(BUNDLE_KEY_SCORE_NUMBER);
+            mScoreNumber.setText(charSequenceScore);*/
+        } else
+            Log.d(TAG, "savedInstanceState is NULL!!");
+
+        //        System.out.println("I'm in onCreate"); //this is wrong
+        Log.d(TAG, "onCreate: " + mCurrentIndex);
+
         //this method will create the layout
         //inflate: creating object of xml layout
         setContentView(R.layout.activity_quiz);
 
-        mActivity = QuizActivity.this;
 
         findViews();
+        mScoreNumber.setText(mScoreValue);
         setListeners();
         updateQuestion();
+        checkDisableBtn();
 
 
 
@@ -75,6 +97,56 @@ public class QuizActivity extends AppCompatActivity {
 
         rootLayout.addView(textViewName);
         setContentView(rootLayout);*/
+    }
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "onStart: " + mCurrentIndex);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d(TAG, "onResume: " + mCurrentIndex);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d(TAG, "onPause: " + mCurrentIndex);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(TAG, "onStop: " + mCurrentIndex);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(TAG, "onDestory: " + mCurrentIndex);
+    }*/
+
+    /**
+     * it will save bundle before it will be destroyed
+     *
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: " + mCurrentIndex);
+
+        outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, mQuestionBank);
+        outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
+        outState.putString(BUNDLE_KEY_SCORE_NUMBER,mScoreNumber.getText().toString());
+
     }
 
     private void findViews() {
@@ -146,10 +218,28 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Question.mNumberOfAnsweredQuestion = 0;
-                mActivity.recreate();
+                mCurrentIndex = 0 ;
+                mScoreNumber.setText("0");
+                mLinearLayoutMain.setVisibility(View.VISIBLE);
+                mLinearLayoutGameOver.setVisibility(View.GONE);
+                mQuestionBank = setQuestion();
+                updateQuestion();
+                checkDisableBtn();
 
             }
         });
+    }
+
+    public Question[] setQuestion(){
+        Question[] mQuestionBank = {
+                new Question(R.string.question_australia, false),
+                new Question(R.string.question_oceans, true),
+                new Question(R.string.question_mideast, false),
+                new Question(R.string.question_africa, true),
+                new Question(R.string.question_americas, false),
+                new Question(R.string.question_asia, false)
+        };
+        return mQuestionBank;
     }
 
     private void checkBtn(boolean b) {
@@ -186,14 +276,14 @@ public class QuizActivity extends AppCompatActivity {
 
     private void checkAnswer(boolean userPressed) {
         if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
-            callToast(R.string.toast_correct, R.color.green, Gravity.BOTTOM, R.drawable.ic_baseline_check_circle, 18).show();
+            callToast(R.string.toast_correct, R.color.green, Gravity.BOTTOM, R.drawable.ic_baseline_check_circle, 16).show();
             mTextViewQuestion.setTextColor(getResources().getColor(R.color.green));
             CharSequence scoreChar = mScoreNumber.getText();
             int score = Integer.parseInt((String) scoreChar);
             score += 1;
             mScoreNumber.setText("" + score);
         } else {
-            callToast(R.string.toast_incorrect, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 18).show();
+            callToast(R.string.toast_incorrect, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 16).show();
             mTextViewQuestion.setTextColor(getResources().getColor(R.color.red));
         }
     }
@@ -206,7 +296,7 @@ public class QuizActivity extends AppCompatActivity {
         TextView toastMessage = toast.getView().findViewById(android.R.id.message);
         toastMessage.setTextColor(Color.WHITE);
         toastMessage.setTextSize(size);
-        toast.setGravity(gravity, 0, 100);
+        toast.setGravity(gravity, 0, 30);
         toastMessage.setCompoundDrawablesWithIntrinsicBounds(iconRes, 0, 0, 0);
 
 
