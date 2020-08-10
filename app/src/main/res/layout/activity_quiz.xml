@@ -12,13 +12,22 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible">
+
+        <ImageButton
+            android:id="@+id/imageBtn_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@android:drawable/ic_menu_manage" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -44,6 +53,8 @@
             android:id="@+id/txtview_question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
             android:padding="10dp"
             android:textSize="20sp"
             tools:text="This is Test" />
@@ -51,6 +62,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -76,6 +88,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <ImageButton
@@ -103,6 +116,15 @@
                 android:src="@drawable/ic_double_arrow_right" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/btn_cheat"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.geoquiz.CheatActivity;
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.R;
 
@@ -30,18 +32,13 @@ public class QuizActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_CURRENT_INDEX = "currentIndex";
     private static final String BUNDLE_KEY_SCORE_NUMBER = "scoreNumber";
     private static final String BUNDLE_KEY_QUESTION_BANK = "questionBank";
+    public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
+    public static final int REQUEST_CODE_CHEAT = 0;
 
-    private Button mButtonTrue;
-    private Button mButtonFalse;
-    private ImageButton mImageButtonNext;
-    private ImageButton mImageButtonPrev;
-    private ImageButton mImageButtonFirst;
-    private ImageButton mImageButtonLast;
-    private ImageButton mImageButtonReset;
-    private TextView mTextViewQuestion;
-    private TextView mScoreNumber;
+    private Button mButtonTrue, mButtonFalse, mButtonCheat;
+    private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast, mImageButtonReset, mImageButtonSetting;
+    private TextView mTextViewQuestion, mScoreNumber, mScoreNumberGameOver;
     private String mScoreValue = "0";
-    private TextView mScoreNumberGameOver;
     private LinearLayout mLinearLayoutMain;
     private LinearLayout mLinearLayoutGameOver;
 
@@ -63,11 +60,6 @@ public class QuizActivity extends AppCompatActivity {
             mQuestionBank = (Question[]) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
             mCurrentIndex = savedInstanceState.getInt(BUNDLE_KEY_CURRENT_INDEX, 0);
             mScoreValue = savedInstanceState.getString(BUNDLE_KEY_SCORE_NUMBER);
-
-            /*int score = savedInstanceState.getInt(BUNDLE_KEY_SCORE_NUMBER);
-            mScoreNumber.setText("" + score);*/
-            /*CharSequence charSequenceScore = savedInstanceState.getCharSequence(BUNDLE_KEY_SCORE_NUMBER);
-            mScoreNumber.setText(charSequenceScore);*/
         } else
             Log.d(TAG, "savedInstanceState is NULL!!");
 
@@ -145,7 +137,18 @@ public class QuizActivity extends AppCompatActivity {
 
         outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, mQuestionBank);
         outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
-        outState.putString(BUNDLE_KEY_SCORE_NUMBER,mScoreNumber.getText().toString());
+        outState.putString(BUNDLE_KEY_SCORE_NUMBER, mScoreNumber.getText().toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            mQuestionBank[mCurrentIndex].setCheater(data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false));
+        }
 
     }
 
@@ -155,11 +158,13 @@ public class QuizActivity extends AppCompatActivity {
         mScoreNumberGameOver = findViewById(R.id.score_number_gameOver);
         mButtonTrue = findViewById(R.id.btn_true);
         mButtonFalse = findViewById(R.id.btn_false);
+        mButtonCheat = findViewById(R.id.btn_cheat);
         mImageButtonNext = findViewById(R.id.imageBtn_next);
         mImageButtonPrev = findViewById(R.id.imageBtn_prev);
         mImageButtonFirst = findViewById(R.id.imageBtn_first);
         mImageButtonLast = findViewById(R.id.imageBtn_last);
         mImageButtonReset = findViewById(R.id.imageBtn_reset);
+        mImageButtonSetting = findViewById(R.id.imageBtn_setting);
         mLinearLayoutMain = findViewById(R.id.main_layout);
         mLinearLayoutGameOver = findViewById(R.id.game_over_layout);
 
@@ -196,6 +201,7 @@ public class QuizActivity extends AppCompatActivity {
                 mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.length) % mQuestionBank.length;
                 updateQuestion();
                 checkDisableBtn();
+
             }
         });
         mImageButtonFirst.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +210,7 @@ public class QuizActivity extends AppCompatActivity {
                 mCurrentIndex = 0;
                 updateQuestion();
                 checkDisableBtn();
+
             }
         });
         mImageButtonLast.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +225,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Question.mNumberOfAnsweredQuestion = 0;
-                mCurrentIndex = 0 ;
+                mCurrentIndex = 0;
                 mScoreNumber.setText("0");
                 mLinearLayoutMain.setVisibility(View.VISIBLE);
                 mLinearLayoutGameOver.setVisibility(View.GONE);
@@ -228,9 +235,24 @@ public class QuizActivity extends AppCompatActivity {
 
             }
         });
+        mButtonCheat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
+                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+//                startActivity(intent);
+            }
+        });
+        mImageButtonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
-    public Question[] setQuestion(){
+    public Question[] setQuestion() {
         Question[] mQuestionBank = {
                 new Question(R.string.question_australia, false),
                 new Question(R.string.question_oceans, true),
@@ -275,16 +297,20 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void checkAnswer(boolean userPressed) {
-        if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
-            callToast(R.string.toast_correct, R.color.green, Gravity.BOTTOM, R.drawable.ic_baseline_check_circle, 16).show();
-            mTextViewQuestion.setTextColor(getResources().getColor(R.color.green));
-            CharSequence scoreChar = mScoreNumber.getText();
-            int score = Integer.parseInt((String) scoreChar);
-            score += 1;
-            mScoreNumber.setText("" + score);
+        if (mQuestionBank[mCurrentIndex].isCheater()) {
+            callToast(R.string.judgment_toast, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 16).show();
         } else {
-            callToast(R.string.toast_incorrect, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 16).show();
-            mTextViewQuestion.setTextColor(getResources().getColor(R.color.red));
+            if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
+                callToast(R.string.toast_correct, R.color.green, Gravity.BOTTOM, R.drawable.ic_baseline_check_circle, 16).show();
+                mTextViewQuestion.setTextColor(getResources().getColor(R.color.green));
+                CharSequence scoreChar = mScoreNumber.getText();
+                int score = Integer.parseInt((String) scoreChar);
+                score += 1;
+                mScoreNumber.setText("" + score);
+            } else {
+                callToast(R.string.toast_incorrect, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 16).show();
+                mTextViewQuestion.setTextColor(getResources().getColor(R.color.red));
+            }
         }
     }
 

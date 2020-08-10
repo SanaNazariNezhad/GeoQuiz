@@ -7,6 +7,15 @@ public class Question implements Serializable {
     private boolean mIsAnswerTrue;
     private int mDisableBtn = 0;
     public static int mNumberOfAnsweredQuestion = 0;
+    private boolean mIsCheater = false;
+
+    public boolean isCheater() {
+        return mIsCheater;
+    }
+
+    public void setCheater(boolean cheater) {
+        mIsCheater = cheater;
+    }
 
     public int isDisableBtn() {
         return mDisableBtn;
@@ -36,7 +45,6 @@ public class Question implements Serializable {
     public Question(int questionTextResId, boolean isAnswerTrue) {
         mQuestionTextResId = questionTextResId;
         mIsAnswerTrue = isAnswerTrue;
-//        mNumberOfQuestion ++ ;
     }
 
     public Question() {
