@@ -21,16 +21,16 @@
             android:id="@+id/imageBtn_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <Button
@@ -98,14 +98,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/imageBtn_first"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:src="@drawable/ic_double_arrow_left" />
 
                 <ImageButton
@@ -118,7 +118,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:orientation="horizontal">
 
                 <ImageButton

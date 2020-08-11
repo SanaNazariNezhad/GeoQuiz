@@ -19,10 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.geoquiz.BackgroundColor;
 import com.example.geoquiz.CheatActivity;
 import com.example.geoquiz.SettingActivity;
+import com.example.geoquiz.TextSize;
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.R;
+import com.example.geoquiz.model.Setting;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -33,9 +36,13 @@ public class QuizActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_CURRENT_INDEX = "currentIndex";
     private static final String BUNDLE_KEY_SCORE_NUMBER = "scoreNumber";
     private static final String BUNDLE_KEY_QUESTION_BANK = "questionBank";
+    private static final String BUNDLE_KEY_SETTING = "setting";
     public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
+    public static final String EXTRA_SETTING_STATUS = "Setting";
     public static final int REQUEST_CODE_CHEAT = 0;
     public static final int REQUEST_CODE_SETTING = 1;
+    public static final String FLAG = "flag";
+    private boolean flag;
 
     private Button mButtonTrue, mButtonFalse, mButtonCheat;
     private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast, mImageButtonReset, mImageButtonSetting;
@@ -46,6 +53,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
     private Question[] mQuestionBank = setQuestion();
+    boolean[] mBooleansBtn = {false,false,false,false,false,false,false};
+    private Setting mSetting = new Setting(mBooleansBtn,"Medium","White");
 
 
     /**
@@ -62,6 +71,8 @@ public class QuizActivity extends AppCompatActivity {
             mQuestionBank = (Question[]) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
             mCurrentIndex = savedInstanceState.getInt(BUNDLE_KEY_CURRENT_INDEX, 0);
             mScoreValue = savedInstanceState.getString(BUNDLE_KEY_SCORE_NUMBER);
+            mSetting = (Setting) savedInstanceState.getSerializable(BUNDLE_KEY_SETTING);
+            flag = savedInstanceState.getBoolean(FLAG);
         } else
             Log.d(TAG, "savedInstanceState is NULL!!");
 
@@ -77,6 +88,8 @@ public class QuizActivity extends AppCompatActivity {
         mScoreNumber.setText(mScoreValue);
         setListeners();
         updateQuestion();
+        if (flag)
+            updateSetting();
         checkDisableBtn();
 
 
@@ -91,6 +104,76 @@ public class QuizActivity extends AppCompatActivity {
 
         rootLayout.addView(textViewName);
         setContentView(rootLayout);*/
+    }
+
+    private void updateSetting() {
+        updateBtn();
+        updateSize();
+        updateBackgroundColor();
+    }
+
+    private void updateBackgroundColor() {
+//        mLinearLayoutMain.setBackgroundResource(R.color.light_red);
+        if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_RED")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_red);
+        }
+        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_BLUE")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_blue);
+        }
+        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_GREEN")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_green);
+        }
+        else {
+            mLinearLayoutMain.setBackgroundResource(R.color.white);
+        }
+    }
+
+    private void updateSize() {
+//        mTextViewQuestion.setTextSize(14);
+        if (mSetting.getTextSize().equalsIgnoreCase("SMALL"))
+            mTextViewQuestion.setTextSize(14);
+        else if (mSetting.getTextSize().equalsIgnoreCase("MEDIUM"))
+            mTextViewQuestion.setTextSize(16);
+        else
+            mTextViewQuestion.setTextSize(18);
+    }
+
+    private void updateBtn() {
+        boolean[] btnStatus = mSetting.getHideButtons();
+        if (btnStatus[0])
+            mButtonTrue.setEnabled(false);
+        else
+            mButtonTrue.setEnabled(true);
+
+        if (btnStatus[1])
+            mButtonFalse.setEnabled(false);
+        else
+            mButtonFalse.setEnabled(true);
+
+        if (btnStatus[2])
+            mImageButtonNext.setEnabled(false);
+        else
+            mImageButtonNext.setEnabled(true);
+
+        if (btnStatus[3])
+            mImageButtonPrev.setEnabled(false);
+        else
+            mImageButtonPrev.setEnabled(true);
+
+        if (btnStatus[4])
+            mImageButtonFirst.setEnabled(false);
+        else
+            mImageButtonFirst.setEnabled(true);
+
+        if (btnStatus[5])
+            mImageButtonLast.setEnabled(false);
+        else
+            mImageButtonLast.setEnabled(true);
+
+        if (btnStatus[6])
+            mButtonCheat.setEnabled(false);
+        else
+            mButtonCheat.setEnabled(true);
     }
     /*@Override
     protected void onStart() {
@@ -140,6 +223,8 @@ public class QuizActivity extends AppCompatActivity {
         outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, mQuestionBank);
         outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
         outState.putString(BUNDLE_KEY_SCORE_NUMBER, mScoreNumber.getText().toString());
+        outState.putSerializable(BUNDLE_KEY_SETTING,mSetting);
+        outState.putBoolean(FLAG,flag);
     }
 
     @Override
@@ -150,6 +235,12 @@ public class QuizActivity extends AppCompatActivity {
             return;
         if (requestCode == REQUEST_CODE_CHEAT) {
             mQuestionBank[mCurrentIndex].setCheater(data.getBooleanExtra(CheatActivity.EXTRA_IS_CHEAT, false));
+            checkDisableBtn();
+        } else if (requestCode == REQUEST_CODE_SETTING) {
+            Bundle bundle = data.getExtras();
+            mSetting = (Setting) bundle.getSerializable(SettingActivity.EXTRA_IS_SAVED_SETTING);
+            updateSetting();
+            flag = true;
         }
 
     }
@@ -193,7 +284,9 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
+                updateSetting();
                 checkDisableBtn();
+
 
             }
         });
@@ -202,7 +295,9 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.length) % mQuestionBank.length;
                 updateQuestion();
+                updateSetting();
                 checkDisableBtn();
+
 
             }
         });
@@ -211,7 +306,9 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = 0;
                 updateQuestion();
+                updateSetting();
                 checkDisableBtn();
+
 
             }
         });
@@ -220,7 +317,9 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCurrentIndex = mQuestionBank.length - 1;
                 updateQuestion();
+                updateSetting();
                 checkDisableBtn();
+
             }
         });
         mImageButtonReset.setOnClickListener(new View.OnClickListener() {
@@ -233,7 +332,9 @@ public class QuizActivity extends AppCompatActivity {
                 mLinearLayoutGameOver.setVisibility(View.GONE);
                 mQuestionBank = setQuestion();
                 updateQuestion();
+                updateSetting();
                 checkDisableBtn();
+
 
             }
         });
@@ -243,6 +344,7 @@ public class QuizActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
+                updateSetting();
 //                startActivity(intent);
             }
         });
@@ -250,7 +352,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
-                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+                intent.putExtra(EXTRA_SETTING_STATUS, mSetting);
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/layout_setting"
@@ -156,8 +153,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="275dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="150dp"
             android:text="@string/questionsSize"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -166,8 +163,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="100dp">
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="200dp">
 
             <RadioButton
                 android:id="@+id/radioBtnSmall"
@@ -193,8 +190,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="275dp"
-            android:layout_marginEnd="200dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="285dp"
             android:text="@string/backgroundColor"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -203,8 +200,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="275dp">
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="325dp">
 
             <RadioButton
                 android:id="@+id/radioBtnLightRed"
@@ -250,4 +247,5 @@
             android:text="@string/btndiscard" />
 
     </FrameLayout>
+
 </LinearLayout>

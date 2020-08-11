@@ -6,16 +6,23 @@ import com.example.geoquiz.TextSize;
 import java.io.Serializable;
 
 public class Setting implements Serializable {
-    private int mLength = 7;
+    public static int mLength = 7;
     private boolean[] mHideButtons = new boolean[mLength];
-    private TextSize mTextSize;
-    private BackgroundColor mBackgroundColor;
+    private String  mTextSize;
+    private String  mBackgroundColor;
+
+    public Setting(boolean[] hideButtons, String textSize, String backgroundColor) {
+        mHideButtons = hideButtons;
+        mTextSize = textSize;
+        mBackgroundColor = backgroundColor;
+    }
 
     {
         for (int i = 0; i <mLength ; i++) {
             mHideButtons[i] = false;
         }
     }
+
 
     public boolean[] getHideButtons() {
         return mHideButtons;
@@ -25,19 +32,19 @@ public class Setting implements Serializable {
         mHideButtons = hideButtons;
     }
 
-    public TextSize getTextSize() {
+    public String getTextSize() {
         return mTextSize;
     }
 
-    public void setTextSize(TextSize textSize) {
+    public void setTextSize(String  textSize) {
         mTextSize = textSize;
     }
 
-    public BackgroundColor getBackgroundColor() {
+    public String getBackgroundColor() {
         return mBackgroundColor;
     }
 
-    public void setBackgroundColor(BackgroundColor backgroundColor) {
+    public void setBackgroundColor(String backgroundColor) {
         mBackgroundColor = backgroundColor;
     }
 }
