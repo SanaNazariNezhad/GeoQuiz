@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.CheatActivity;
+import com.example.geoquiz.SettingActivity;
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.R;
 
@@ -34,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_QUESTION_BANK = "questionBank";
     public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
     public static final int REQUEST_CODE_CHEAT = 0;
+    public static final int REQUEST_CODE_SETTING = 1;
 
     private Button mButtonTrue, mButtonFalse, mButtonCheat;
     private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast, mImageButtonReset, mImageButtonSetting;
@@ -247,7 +249,9 @@ public class QuizActivity extends AppCompatActivity {
         mImageButtonSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
+                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+                startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });
     }

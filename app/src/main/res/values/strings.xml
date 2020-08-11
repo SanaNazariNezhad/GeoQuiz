@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
-    <string name="question_text">تهران پایتخت ایران است</string>
     <string name="button_false">نادرست</string>
     <string name="button_true">درست</string>
+    <string name="button_next">بعدی</string>
+    <string name="button_prev">قبلی</string>
+    <string name="button_first">اولی</string>
+    <string name="button_last">آخری</string>
     <string name="toast_correct">جواب شما صحیح است</string>
     <string name="toast_incorrect">جواب شما غلط است</string>
     <string name="judgment_toast">تقلب کار خوبی نیست</string>
@@ -13,12 +16,15 @@
     <string name="question_africa">مصر در قاره آفریقا قرار دارد.</string>
     <string name="question_americas">کشور آمریکا پرجمعیت ترین کشور دنیا است.</string>
     <string name="question_asia">قاره آسیا در نیم کره جنوبی جهان واقع شده است.</string>
+
     <string name="score_txt">امتیاز:</string>
     <string name="score_number_txt">0</string>
     <string name="btn_cheat">تقلب</string>
     <string name="txt_warning">آیا اطمینان برای تقلب دارید؟</string>
     <string name="btn_answer">نمایش تقلب</string>
     <string name="btn_back">برگشت</string>
+    <string name="show_setting">Show</string>
+    <string name="hide_setting">Hide</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
@@ -35,4 +41,16 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="large">Large</string>
+    <string name="questionsSize">سایز سوالات</string>
+    <string name="backgroundColor">رنگ پس زمینه</string>
+    <string name="lightred">LightRed</string>
+    <string name="lightblue">LightBlue</string>
+    <string name="lightgreen">LightGreen</string>
+    <string name="white">White</string>
+    <string name="btnsave">Save</string>
+    <string name="btndiscard">Discard</string>
+
 </resources>

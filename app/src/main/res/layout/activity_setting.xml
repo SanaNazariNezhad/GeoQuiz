@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity">
+
+    <FrameLayout
+        android:id="@+id/layout_setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/button_true"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnTrue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/button_false"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/button_next"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="125dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/button_prev"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnPrev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="125dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/button_first"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/button_last"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnLast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="175dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textView_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="25dp"
+            android:textStyle="bold"
+            android:text="@string/btn_cheat"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_btnCheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="100dp"
+            android:checked="true"
+            android:text="@string/show_setting" />
+
+        <TextView
+            android:id="@+id/textViewSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="275dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/questionsSize"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="100dp">
+
+            <RadioButton
+                android:id="@+id/radioBtnSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/small" />
+
+            <RadioButton
+                android:id="@+id/radioBtnMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/medium" />
+
+            <RadioButton
+                android:id="@+id/radioBtnLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/large" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textViewColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="275dp"
+            android:layout_marginEnd="200dp"
+            android:text="@string/backgroundColor"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="275dp">
+
+            <RadioButton
+                android:id="@+id/radioBtnLightRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lightred" />
+
+            <RadioButton
+                android:id="@+id/radioBtnLightBlue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lightblue" />
+
+            <RadioButton
+                android:id="@+id/radioBtnLightGreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lightgreen" />
+
+            <RadioButton
+                android:id="@+id/radioBtnWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/white" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
+            android:text="@string/btnsave" />
+
+        <Button
+            android:id="@+id/btnDiscard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="125dp"
+            android:layout_marginBottom="25dp"
+            android:text="@string/btndiscard" />
+    </FrameLayout>
+</LinearLayout>
