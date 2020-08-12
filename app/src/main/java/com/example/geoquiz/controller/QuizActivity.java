@@ -313,7 +313,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateBackgroundColor() {
-//        mLinearLayoutMain.setBackgroundResource(R.color.light_red);
         if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_RED")) {
             mLinearLayoutMain.setBackgroundResource(R.color.light_red);
         }
@@ -329,7 +328,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateSize() {
-//        mTextViewQuestion.setTextSize(14);
         if (mSetting.getTextSize().equalsIgnoreCase("SMALL"))
             mTextViewQuestion.setTextSize(14);
         else if (mSetting.getTextSize().equalsIgnoreCase("MEDIUM"))
