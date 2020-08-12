@@ -382,12 +382,14 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void checkDisableBtn() {
-        if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
-            mButtonFalse.setEnabled(true);
-            mButtonTrue.setEnabled(true);
-        } else {
-            mButtonFalse.setEnabled(false);
-            mButtonTrue.setEnabled(false);
+        if (!mSetting.getHideButtons()[0]  && !mSetting.getHideButtons()[1]){
+            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+                mButtonFalse.setEnabled(true);
+                mButtonTrue.setEnabled(true);
+            } else {
+                mButtonFalse.setEnabled(false);
+                mButtonTrue.setEnabled(false);
+            }
         }
     }
 
