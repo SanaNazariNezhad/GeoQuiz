@@ -106,75 +106,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(rootLayout);*/
     }
 
-    private void updateSetting() {
-        updateBtn();
-        updateSize();
-        updateBackgroundColor();
-    }
 
-    private void updateBackgroundColor() {
-//        mLinearLayoutMain.setBackgroundResource(R.color.light_red);
-        if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_RED")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_red);
-        }
-        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_BLUE")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_blue);
-        }
-        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_GREEN")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_green);
-        }
-        else {
-            mLinearLayoutMain.setBackgroundResource(R.color.white);
-        }
-    }
-
-    private void updateSize() {
-//        mTextViewQuestion.setTextSize(14);
-        if (mSetting.getTextSize().equalsIgnoreCase("SMALL"))
-            mTextViewQuestion.setTextSize(14);
-        else if (mSetting.getTextSize().equalsIgnoreCase("MEDIUM"))
-            mTextViewQuestion.setTextSize(16);
-        else
-            mTextViewQuestion.setTextSize(18);
-    }
-
-    private void updateBtn() {
-        boolean[] btnStatus = mSetting.getHideButtons();
-        if (btnStatus[0])
-            mButtonTrue.setEnabled(false);
-        else
-            mButtonTrue.setEnabled(true);
-
-        if (btnStatus[1])
-            mButtonFalse.setEnabled(false);
-        else
-            mButtonFalse.setEnabled(true);
-
-        if (btnStatus[2])
-            mImageButtonNext.setEnabled(false);
-        else
-            mImageButtonNext.setEnabled(true);
-
-        if (btnStatus[3])
-            mImageButtonPrev.setEnabled(false);
-        else
-            mImageButtonPrev.setEnabled(true);
-
-        if (btnStatus[4])
-            mImageButtonFirst.setEnabled(false);
-        else
-            mImageButtonFirst.setEnabled(true);
-
-        if (btnStatus[5])
-            mImageButtonLast.setEnabled(false);
-        else
-            mImageButtonLast.setEnabled(true);
-
-        if (btnStatus[6])
-            mButtonCheat.setEnabled(false);
-        else
-            mButtonCheat.setEnabled(true);
-    }
     /*@Override
     protected void onStart() {
         super.onStart();
@@ -356,6 +288,76 @@ public class QuizActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });
+    }
+
+    private void updateSetting() {
+        updateBtn();
+        updateSize();
+        updateBackgroundColor();
+    }
+
+    private void updateBackgroundColor() {
+//        mLinearLayoutMain.setBackgroundResource(R.color.light_red);
+        if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_RED")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_red);
+        }
+        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_BLUE")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_blue);
+        }
+        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_GREEN")) {
+            mLinearLayoutMain.setBackgroundResource(R.color.light_green);
+        }
+        else {
+            mLinearLayoutMain.setBackgroundResource(R.color.white);
+        }
+    }
+
+    private void updateSize() {
+//        mTextViewQuestion.setTextSize(14);
+        if (mSetting.getTextSize().equalsIgnoreCase("SMALL"))
+            mTextViewQuestion.setTextSize(14);
+        else if (mSetting.getTextSize().equalsIgnoreCase("MEDIUM"))
+            mTextViewQuestion.setTextSize(16);
+        else
+            mTextViewQuestion.setTextSize(18);
+    }
+
+    private void updateBtn() {
+        boolean[] btnStatus = mSetting.getHideButtons();
+        if (btnStatus[0])
+            mButtonTrue.setEnabled(false);
+        else
+            mButtonTrue.setEnabled(true);
+
+        if (btnStatus[1])
+            mButtonFalse.setEnabled(false);
+        else
+            mButtonFalse.setEnabled(true);
+
+        if (btnStatus[2])
+            mImageButtonNext.setEnabled(false);
+        else
+            mImageButtonNext.setEnabled(true);
+
+        if (btnStatus[3])
+            mImageButtonPrev.setEnabled(false);
+        else
+            mImageButtonPrev.setEnabled(true);
+
+        if (btnStatus[4])
+            mImageButtonFirst.setEnabled(false);
+        else
+            mImageButtonFirst.setEnabled(true);
+
+        if (btnStatus[5])
+            mImageButtonLast.setEnabled(false);
+        else
+            mImageButtonLast.setEnabled(true);
+
+        if (btnStatus[6])
+            mButtonCheat.setEnabled(false);
+        else
+            mButtonCheat.setEnabled(true);
     }
 
     public Question[] setQuestion() {
