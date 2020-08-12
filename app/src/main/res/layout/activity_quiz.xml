@@ -19,9 +19,9 @@
             android:id="@+id/imageBtn_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
+            android:layout_gravity="end|top"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
         <LinearLayout
@@ -123,8 +123,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/btn_cheat"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/logout" />
 
     </LinearLayout>
 

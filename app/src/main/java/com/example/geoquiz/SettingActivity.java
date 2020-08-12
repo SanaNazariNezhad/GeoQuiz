@@ -15,9 +15,6 @@ import com.example.geoquiz.controller.QuizActivity;
 import com.example.geoquiz.model.Setting;
 
 public class SettingActivity extends AppCompatActivity {
-    /*public static final String EXTRA_IS_SAVED_SHOWN_BTN = "isShown";
-    public static final String EXTRA_IS_SAVED_SIZE = "isSize";
-    public static final String EXTRA_IS_SAVED_COLOR = "isColor";*/
     public static final String EXTRA_IS_SAVED_SETTING = "isSaved";
     private SwitchCompat mSwitchBtnTrue;
     private SwitchCompat mSwitchBtnFalse;
@@ -37,12 +34,15 @@ public class SettingActivity extends AppCompatActivity {
     private RadioButton mRadioBtnWhite;
 
     private Setting mSetting;
+    private String mTitleOfApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        mTitleOfApp = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
+        setTitle(mTitleOfApp);
         mSetting =(Setting) getIntent().getSerializableExtra(QuizActivity.EXTRA_SETTING_STATUS);
 
         findViews();

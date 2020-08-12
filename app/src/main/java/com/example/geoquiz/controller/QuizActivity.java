@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.geoquiz.BackgroundColor;
 import com.example.geoquiz.CheatActivity;
+import com.example.geoquiz.LoginActivity;
 import com.example.geoquiz.SettingActivity;
 import com.example.geoquiz.TextSize;
 import com.example.geoquiz.model.Question;
@@ -39,12 +40,15 @@ public class QuizActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_SETTING = "setting";
     public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
     public static final String EXTRA_SETTING_STATUS = "Setting";
+    public static final String EXTRA_APP_TITLE_FOR_CHEAT = "extraUsername";
+    public static final String EXTRA_APP_TITLE_FOR_SETTING = "extraUsername";
     public static final int REQUEST_CODE_CHEAT = 0;
     public static final int REQUEST_CODE_SETTING = 1;
     public static final String FLAG = "flag";
     private boolean flag;
+    private String mAppName;
 
-    private Button mButtonTrue, mButtonFalse, mButtonCheat;
+    private Button mButtonTrue, mButtonFalse, mButtonCheat, mButtonLogOut;
     private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast, mImageButtonReset, mImageButtonSetting;
     private TextView mTextViewQuestion, mScoreNumber, mScoreNumberGameOver;
     private String mScoreValue = "0";
@@ -84,6 +88,8 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
 
+        mAppName = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
+        setTitle(mAppName);
         findViews();
         mScoreNumber.setText(mScoreValue);
         setListeners();
@@ -172,6 +178,7 @@ public class QuizActivity extends AppCompatActivity {
             Bundle bundle = data.getExtras();
             mSetting = (Setting) bundle.getSerializable(SettingActivity.EXTRA_IS_SAVED_SETTING);
             updateSetting();
+            checkDisableBtn();
             flag = true;
         }
 
@@ -184,6 +191,7 @@ public class QuizActivity extends AppCompatActivity {
         mButtonTrue = findViewById(R.id.btn_true);
         mButtonFalse = findViewById(R.id.btn_false);
         mButtonCheat = findViewById(R.id.btn_cheat);
+        mButtonLogOut = findViewById(R.id.btnLogOut);
         mImageButtonNext = findViewById(R.id.imageBtn_next);
         mImageButtonPrev = findViewById(R.id.imageBtn_prev);
         mImageButtonFirst = findViewById(R.id.imageBtn_first);
@@ -275,6 +283,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+                intent.putExtra(EXTRA_APP_TITLE_FOR_CHEAT,mAppName);
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
                 updateSetting();
 //                startActivity(intent);
@@ -285,7 +294,14 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
                 intent.putExtra(EXTRA_SETTING_STATUS, mSetting);
+                intent.putExtra(EXTRA_APP_TITLE_FOR_SETTING,mAppName);
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
+            }
+        });
+        mButtonLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -390,6 +406,22 @@ public class QuizActivity extends AppCompatActivity {
                 mButtonFalse.setEnabled(false);
                 mButtonTrue.setEnabled(false);
             }
+        }else if (!mSetting.getHideButtons()[0]){
+            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+                mButtonTrue.setEnabled(true);
+            } else {
+                mButtonFalse.setEnabled(false);
+                mButtonTrue.setEnabled(false);
+            }
+
+        }else if (!mSetting.getHideButtons()[1]){
+            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+                mButtonFalse.setEnabled(true);
+            } else {
+                mButtonFalse.setEnabled(false);
+                mButtonTrue.setEnabled(false);
+            }
+
         }
     }
 

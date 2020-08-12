@@ -25,6 +25,7 @@ public class CheatActivity extends AppCompatActivity {
     private boolean mIsAnswerTrue;
     private boolean mCheck = false;
     private String mAnswerTxt = "";
+    private String mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,8 @@ public class CheatActivity extends AppCompatActivity {
 
             setContentView(R.layout.activity_cheat);
 
-
+        mTitle = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
+        setTitle(mTitle);
         if (mCheck)
             setShownAnswerResult(mCheck);
         mIsAnswerTrue = getIntent().getBooleanExtra(QuizActivity.EXTRA_QUESTION_ANSWER, false);
