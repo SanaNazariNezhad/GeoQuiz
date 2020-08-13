@@ -6,15 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/white"
     tools:context=".controller.QuizActivity"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:visibility="visible">
 
         <ImageButton
@@ -22,22 +21,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|top"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
-
-        <Button
-            android:id="@+id/btnLogOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginEnd="10dp"
-            android:text="@string/logout" />
+            android:background="@color/white"
+            android:src="@drawable/ic_settings"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="15dp"
+            android:layout_gravity="center|top"
+            android:layout_margin="40dp"
             android:orientation="horizontal">
 
             <TextView
@@ -52,9 +45,8 @@
                 android:id="@+id/score_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:padding="8dp"
                 android:text="@string/score_txt"
-                android:padding="2dp"
                 android:textColor="@color/cyan"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -63,106 +55,121 @@
             android:id="@+id/txtview_question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="3dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="100dp"
+            android:padding="10dp"
             android:textSize="16sp"
             tools:text="This is Test" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="165dp"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_indeterminate_checkbox"
                 android:text="@string/button_false"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_checked_checkbox"
                 android:text="@string/button_true"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:layout_gravity="center|top"
+            android:layout_marginTop="235dp"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/imageBtn_first"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_double_left" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/imageBtn_prev"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_previous" />
 
-                <ImageButton
-                    android:id="@+id/imageBtn_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:src="@drawable/ic_double_arrow_left" />
+            <ImageButton
+                android:id="@+id/imageBtn_next"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_next" />
 
-                <ImageButton
-                    android:id="@+id/imageBtn_prev"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_left" />
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/imageBtn_last"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_double_right" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
+        </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/imageBtn_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right" />
-
-                <ImageButton
-                    android:id="@+id/imageBtn_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_double_arrow_right" />
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <Button
+        <ImageButton
             android:id="@+id/btn_cheat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_cheat" />
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="165dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_help"/>
+
+        <ImageButton
+            android:id="@+id/btnLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="top|start"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_logout_rounded_down" />
 
 
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/game_over_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="120dp"
             android:orientation="horizontal">
 
             <TextView
@@ -188,9 +195,11 @@
             android:id="@+id/imageBtn_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/ic_arrow_reset" />
+            android:layout_gravity="center|top"
+            android:layout_marginTop="200dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_restart" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 </FrameLayout>

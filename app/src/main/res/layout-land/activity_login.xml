@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <EditText
@@ -30,12 +31,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:background="@color/white"
         android:text="@string/login" />
 
     <Button
         android:id="@+id/btnSignUp_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:text="@string/sign_up" />
 
 </LinearLayout>

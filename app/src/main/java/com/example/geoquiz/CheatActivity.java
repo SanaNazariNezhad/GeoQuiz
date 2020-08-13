@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.geoquiz.controller.QuizActivity;
@@ -18,7 +18,7 @@ public class CheatActivity extends AppCompatActivity {
     public static final String BUNDLE_KEY_ANSWER = "CheatAnswer";
     public static final String BUNDLE_KEY_ANSWER_DISABLE = "CheatAnswerDisable";
 
-    private Button mButtonBack , mButtonShowAnswer;
+    private ImageButton mImageButtonBack, mImageButtonShowAnswer;
     private TextView mTextViewAnswer;
     private boolean mButtonShowAnswerDisable = false;
     private boolean mIsAnswerTrue;
@@ -59,7 +59,7 @@ public class CheatActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        mButtonShowAnswer.setOnClickListener(new View.OnClickListener() {
+        mImageButtonShowAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mIsAnswerTrue)
@@ -74,7 +74,7 @@ public class CheatActivity extends AppCompatActivity {
 
             }
         });
-        mButtonBack.setOnClickListener(new View.OnClickListener() {
+        mImageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setShownAnswerResult(mCheck);
@@ -85,15 +85,15 @@ public class CheatActivity extends AppCompatActivity {
 
     private void setDisable(boolean b) {
         if (b)
-            mButtonShowAnswer.setEnabled(false);
+            mImageButtonShowAnswer.setEnabled(false);
         else
-            mButtonShowAnswer.setEnabled(true);
+            mImageButtonShowAnswer.setEnabled(true);
     }
 
     private void findViews() {
-        mButtonShowAnswer = findViewById(R.id.btn_show_answer);
+        mImageButtonShowAnswer = findViewById(R.id.btn_show_answer);
         mTextViewAnswer = findViewById(R.id.txtview_answer);
-        mButtonBack = findViewById(R.id.btn_back);
+        mImageButtonBack = findViewById(R.id.btn_back);
 
     }
 

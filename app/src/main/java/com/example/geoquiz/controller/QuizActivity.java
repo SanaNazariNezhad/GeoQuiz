@@ -1,15 +1,14 @@
 package com.example.geoquiz.controller;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,17 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.geoquiz.BackgroundColor;
 import com.example.geoquiz.CheatActivity;
 import com.example.geoquiz.LoginActivity;
 import com.example.geoquiz.SettingActivity;
-import com.example.geoquiz.TextSize;
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.R;
 import com.example.geoquiz.model.Setting;
-
-import java.io.Serializable;
-import java.time.Instant;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -48,12 +42,13 @@ public class QuizActivity extends AppCompatActivity {
     private boolean flag;
     private String mAppName;
 
-    private Button mButtonTrue, mButtonFalse, mButtonCheat, mButtonLogOut;
-    private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast, mImageButtonReset, mImageButtonSetting;
+    private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast,
+            mImageButtonReset, mImageButtonSetting, mImageButtonLogOut, mImageButtonCheat,
+            mImageButtonTrue,mImageButtonFalse;
     private TextView mTextViewQuestion, mScoreNumber, mScoreNumberGameOver;
     private String mScoreValue = "0";
-    private LinearLayout mLinearLayoutMain;
-    private LinearLayout mLinearLayoutGameOver;
+    private FrameLayout mLinearLayoutMain;
+    private FrameLayout mLinearLayoutGameOver;
 
     private int mCurrentIndex = 0;
     private Question[] mQuestionBank = setQuestion();
@@ -188,10 +183,10 @@ public class QuizActivity extends AppCompatActivity {
         mTextViewQuestion = findViewById(R.id.txtview_question_text);
         mScoreNumber = findViewById(R.id.score_number);
         mScoreNumberGameOver = findViewById(R.id.score_number_gameOver);
-        mButtonTrue = findViewById(R.id.btn_true);
-        mButtonFalse = findViewById(R.id.btn_false);
-        mButtonCheat = findViewById(R.id.btn_cheat);
-        mButtonLogOut = findViewById(R.id.btnLogOut);
+        mImageButtonTrue = findViewById(R.id.btn_true);
+        mImageButtonFalse = findViewById(R.id.btn_false);
+        mImageButtonCheat = findViewById(R.id.btn_cheat);
+        mImageButtonLogOut = findViewById(R.id.btnLogOut);
         mImageButtonNext = findViewById(R.id.imageBtn_next);
         mImageButtonPrev = findViewById(R.id.imageBtn_prev);
         mImageButtonFirst = findViewById(R.id.imageBtn_first);
@@ -205,14 +200,14 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        mButtonTrue.setOnClickListener(new View.OnClickListener() {
+        mImageButtonTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkBtn(true);
                 Question.mNumberOfAnsweredQuestion += 1;
             }
         });
-        mButtonFalse.setOnClickListener(new View.OnClickListener() {
+        mImageButtonFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkBtn(false);
@@ -278,7 +273,7 @@ public class QuizActivity extends AppCompatActivity {
 
             }
         });
-        mButtonCheat.setOnClickListener(new View.OnClickListener() {
+        mImageButtonCheat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
@@ -298,7 +293,7 @@ public class QuizActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });
-        mButtonLogOut.setOnClickListener(new View.OnClickListener() {
+        mImageButtonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -339,14 +334,14 @@ public class QuizActivity extends AppCompatActivity {
     private void updateBtn() {
         boolean[] btnStatus = mSetting.getHideButtons();
         if (btnStatus[0])
-            mButtonTrue.setEnabled(false);
+            mImageButtonTrue.setEnabled(false);
         else
-            mButtonTrue.setEnabled(true);
+            mImageButtonTrue.setEnabled(true);
 
         if (btnStatus[1])
-            mButtonFalse.setEnabled(false);
+            mImageButtonFalse.setEnabled(false);
         else
-            mButtonFalse.setEnabled(true);
+            mImageButtonFalse.setEnabled(true);
 
         if (btnStatus[2])
             mImageButtonNext.setEnabled(false);
@@ -369,9 +364,9 @@ public class QuizActivity extends AppCompatActivity {
             mImageButtonLast.setEnabled(true);
 
         if (btnStatus[6])
-            mButtonCheat.setEnabled(false);
+            mImageButtonCheat.setEnabled(false);
         else
-            mButtonCheat.setEnabled(true);
+            mImageButtonCheat.setEnabled(true);
     }
 
     public Question[] setQuestion() {
@@ -390,34 +385,34 @@ public class QuizActivity extends AppCompatActivity {
         if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
             checkAnswer(b);
             mQuestionBank[mCurrentIndex].setDisableBtn(1);
-            mButtonFalse.setEnabled(false);
-            mButtonTrue.setEnabled(false);
+            mImageButtonFalse.setEnabled(false);
+            mImageButtonTrue.setEnabled(false);
         }
     }
 
     private void checkDisableBtn() {
         if (!mSetting.getHideButtons()[0]  && !mSetting.getHideButtons()[1]){
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
-                mButtonFalse.setEnabled(true);
-                mButtonTrue.setEnabled(true);
+                mImageButtonFalse.setEnabled(true);
+                mImageButtonTrue.setEnabled(true);
             } else {
-                mButtonFalse.setEnabled(false);
-                mButtonTrue.setEnabled(false);
+                mImageButtonFalse.setEnabled(false);
+                mImageButtonTrue.setEnabled(false);
             }
         }else if (!mSetting.getHideButtons()[0]){
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
-                mButtonTrue.setEnabled(true);
+                mImageButtonTrue.setEnabled(true);
             } else {
-                mButtonFalse.setEnabled(false);
-                mButtonTrue.setEnabled(false);
+                mImageButtonFalse.setEnabled(false);
+                mImageButtonTrue.setEnabled(false);
             }
 
         }else if (!mSetting.getHideButtons()[1]){
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
-                mButtonFalse.setEnabled(true);
+                mImageButtonFalse.setEnabled(true);
             } else {
-                mButtonFalse.setEnabled(false);
-                mButtonTrue.setEnabled(false);
+                mImageButtonFalse.setEnabled(false);
+                mImageButtonTrue.setEnabled(false);
             }
 
         }

@@ -23,8 +23,8 @@ public class SettingActivity extends AppCompatActivity {
     private SwitchCompat mSwitchBtnFirst;
     private SwitchCompat mSwitchBtnLast;
     private SwitchCompat mSwitchBtnCheat;
-    private Button mButtonSave;
-    private Button mButtonDiscard;
+    private ImageButton mButtonSave;
+    private ImageButton mButtonDiscard;
     private RadioButton mRadioBtnSmall;
     private RadioButton mRadioBtnMedium;
     private RadioButton mRadioBtnLarge;

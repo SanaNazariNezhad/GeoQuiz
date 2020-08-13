@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/white"
     tools:context=".controller.QuizActivity"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:visibility="visible">
 
         <ImageButton
@@ -22,12 +22,14 @@
             android:layout_gravity="end|top"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
+            android:background="@color/white"
+            android:src="@drawable/ic_settings"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_margin="100dp"
             android:orientation="horizontal">
 
             <TextView
@@ -53,8 +55,8 @@
             android:id="@+id/txtview_question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="150dp"
             android:padding="10dp"
             android:textSize="16sp"
             tools:text="This is Test" />
@@ -62,23 +64,30 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="195dp"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_indeterminate_checkbox"
                 android:text="@string/button_false"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_checked_checkbox"
                 android:text="@string/button_true"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -88,67 +97,79 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="275dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/imageBtn_first"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_double_arrow_left" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_double_left" />
 
             <ImageButton
                 android:id="@+id/imageBtn_prev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_left" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_previous" />
 
             <ImageButton
                 android:id="@+id/imageBtn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_next" />
 
             <ImageButton
                 android:id="@+id/imageBtn_last"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_double_arrow_right" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitXY"
+                android:background="@color/white"
+                android:src="@drawable/ic_double_right" />
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_cheat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/btn_cheat"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_gravity="top"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_help"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnLogOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/logout" />
+            android:src="@drawable/ic_logout_rounded_down" />
 
-    </LinearLayout>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/game_over_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="170dp"
             android:orientation="horizontal">
 
             <TextView
@@ -174,9 +195,12 @@
             android:id="@+id/imageBtn_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/ic_arrow_reset" />
+            android:layout_gravity="center|top"
+            android:layout_marginTop="250dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_restart" />
 
-    </LinearLayout>
+    </FrameLayout>
+
 
 </LinearLayout>
