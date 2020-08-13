@@ -34,8 +34,6 @@ public class QuizActivity extends AppCompatActivity {
     private static final String BUNDLE_KEY_SETTING = "setting";
     public static final String EXTRA_QUESTION_ANSWER = "com.example.geoquiz.questionAnswer";
     public static final String EXTRA_SETTING_STATUS = "Setting";
-    public static final String EXTRA_APP_TITLE_FOR_CHEAT = "extraUsername";
-    public static final String EXTRA_APP_TITLE_FOR_SETTING = "extraUsername";
     public static final int REQUEST_CODE_CHEAT = 0;
     public static final int REQUEST_CODE_SETTING = 1;
     public static final String FLAG = "flag";
@@ -281,7 +279,6 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
-                intent.putExtra(EXTRA_APP_TITLE_FOR_CHEAT, mAppName);
                 intent.putExtra(EXTRA_BACKGROUND_COLOR, mColor);
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
                 updateSetting();
@@ -293,7 +290,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
                 intent.putExtra(EXTRA_SETTING_STATUS, mSetting);
-                intent.putExtra(EXTRA_APP_TITLE_FOR_SETTING, mAppName);
+                intent.putExtra(EXTRA_BACKGROUND_COLOR, mColor);
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });

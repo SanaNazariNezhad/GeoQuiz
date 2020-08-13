@@ -26,7 +26,6 @@ public class CheatActivity extends AppCompatActivity {
     private boolean mIsAnswerTrue;
     private boolean mCheck = false;
     private String mAnswerTxt = "";
-    private String mTitle;
     private String mBackgroundColor;
 
     @Override
@@ -42,8 +41,7 @@ public class CheatActivity extends AppCompatActivity {
 
             setContentView(R.layout.activity_cheat);
 
-        mTitle = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
-        setTitle(mTitle);
+        setTitle(R.string.help);
         mBackgroundColor = getIntent().getStringExtra(QuizActivity.EXTRA_BACKGROUND_COLOR);
 
         if (mCheck)

@@ -6,10 +6,9 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.example.geoquiz.controller.QuizActivity;
 import com.example.geoquiz.model.Setting;
@@ -23,8 +22,8 @@ public class SettingActivity extends AppCompatActivity {
     private SwitchCompat mSwitchBtnFirst;
     private SwitchCompat mSwitchBtnLast;
     private SwitchCompat mSwitchBtnCheat;
-    private ImageButton mButtonSave;
-    private ImageButton mButtonDiscard;
+    private ImageButton mImageButtonSave;
+    private ImageButton mImageButtonDiscard;
     private RadioButton mRadioBtnSmall;
     private RadioButton mRadioBtnMedium;
     private RadioButton mRadioBtnLarge;
@@ -33,21 +32,46 @@ public class SettingActivity extends AppCompatActivity {
     private RadioButton mRadioBtnLightGreen;
     private RadioButton mRadioBtnWhite;
 
+    private FrameLayout mLinearLayoutSetting;
+
     private Setting mSetting;
-    private String mTitleOfApp;
+    private String mBackgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        mTitleOfApp = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
-        setTitle(mTitleOfApp);
+
+        setTitle(R.string.setting);
+        mBackgroundColor = getIntent().getStringExtra(QuizActivity.EXTRA_BACKGROUND_COLOR);
         mSetting =(Setting) getIntent().getSerializableExtra(QuizActivity.EXTRA_SETTING_STATUS);
 
         findViews();
+        setBackColor();
         updateSetting();
         Listeners();
+    }
+
+    private void setBackColor() {
+        if (mBackgroundColor.equals("LIGHT_RED")) {
+            setColor(R.color.light_red);
+        }
+        else if (mBackgroundColor.equals("LIGHT_BLUE")) {
+            setColor(R.color.light_blue);
+        }
+        else if (mBackgroundColor.equals("LIGHT_GREEN")) {
+            setColor(R.color.light_green);
+        }
+        else {
+            setColor(R.color.white);
+        }
+    }
+
+    private void setColor(int p) {
+        mLinearLayoutSetting.setBackgroundResource(p);
+        mImageButtonSave.setBackgroundResource(p);
+        mImageButtonDiscard.setBackgroundResource(p);
     }
 
     private void updateSetting() {
@@ -126,7 +150,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void Listeners() {
-        mButtonSave.setOnClickListener(new View.OnClickListener() {
+        mImageButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean[] checkHide = btnStatus();
@@ -140,7 +164,7 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
-        mButtonDiscard.setOnClickListener(new View.OnClickListener() {
+        mImageButtonDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -207,8 +231,9 @@ public class SettingActivity extends AppCompatActivity {
         mRadioBtnLightBLue = findViewById(R.id.radioBtnLightBlue);
         mRadioBtnLightGreen = findViewById(R.id.radioBtnLightGreen);
         mRadioBtnWhite = findViewById(R.id.radioBtnWhite);
-        mButtonSave = findViewById(R.id.btnSave);
-        mButtonDiscard = findViewById(R.id.btnDiscard);
+        mImageButtonSave = findViewById(R.id.btnSave);
+        mImageButtonDiscard = findViewById(R.id.btnDiscard);
+        mLinearLayoutSetting = findViewById(R.id.layout_setting);
 
     }
 
