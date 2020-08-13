@@ -46,7 +46,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast,
             mImageButtonReset, mImageButtonSetting, mImageButtonLogOut, mImageButtonCheat,
-            mImageButtonTrue, mImageButtonFalse;
+            mImageButtonTrue, mImageButtonFalse,mImageButtonScore;
     private TextView mTextViewQuestion, mScoreNumber, mScoreNumberGameOver;
     private String mScoreValue = "0";
     private FrameLayout mLinearLayoutMain;
@@ -194,6 +194,7 @@ public class QuizActivity extends AppCompatActivity {
         mImageButtonFirst = findViewById(R.id.imageBtn_first);
         mImageButtonLast = findViewById(R.id.imageBtn_last);
         mImageButtonReset = findViewById(R.id.imageBtn_reset);
+        mImageButtonScore = findViewById(R.id.imageBtn_score);
         mImageButtonSetting = findViewById(R.id.imageBtn_setting);
         mLinearLayoutMain = findViewById(R.id.main_layout);
         mLinearLayoutGameOver = findViewById(R.id.game_over_layout);
@@ -337,6 +338,7 @@ public class QuizActivity extends AppCompatActivity {
         mImageButtonPrev.setBackgroundResource(p);
         mImageButtonFirst.setBackgroundResource(p);
         mImageButtonLast.setBackgroundResource(p);
+        mImageButtonScore.setBackgroundResource(p);
     }
 
     private void updateSize() {
@@ -450,18 +452,23 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setGameOverColor() {
-        if (mColor.equals("LIGHT_RED")) {
-            mLinearLayoutGameOver.setBackgroundResource(R.color.light_red);
-            mImageButtonReset.setBackgroundResource(R.color.light_red);
-        } else if (mColor.equals("LIGHT_BLUE")) {
-            mLinearLayoutGameOver.setBackgroundResource(R.color.light_blue);
-            mImageButtonReset.setBackgroundResource(R.color.light_blue);
-        } else if (mColor.equals("LIGHT_GREEN")) {
-            mLinearLayoutGameOver.setBackgroundResource(R.color.light_green);
-            mImageButtonReset.setBackgroundResource(R.color.light_green);
-        } else {
-            mLinearLayoutGameOver.setBackgroundResource(R.color.white);
-            mImageButtonReset.setBackgroundResource(R.color.white);
+        switch (mColor) {
+            case "LIGHT_RED":
+                mLinearLayoutGameOver.setBackgroundResource(R.color.light_red);
+                mImageButtonReset.setBackgroundResource(R.color.light_red);
+                break;
+            case "LIGHT_BLUE":
+                mLinearLayoutGameOver.setBackgroundResource(R.color.light_blue);
+                mImageButtonReset.setBackgroundResource(R.color.light_blue);
+                break;
+            case "LIGHT_GREEN":
+                mLinearLayoutGameOver.setBackgroundResource(R.color.light_green);
+                mImageButtonReset.setBackgroundResource(R.color.light_green);
+                break;
+            default:
+                mLinearLayoutGameOver.setBackgroundResource(R.color.white);
+                mImageButtonReset.setBackgroundResource(R.color.white);
+                break;
         }
     }
 

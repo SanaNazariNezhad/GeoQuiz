@@ -29,26 +29,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_margin="100dp"
+            android:layout_margin="50dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/score_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="center"
                 android:text="@string/score_number_txt"
-                android:textColor="@color/cyan"
+                android:textColor="@color/scoreColor"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/score_txt"
+            <ImageButton
+                android:id="@+id/imageBtn_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:padding="8dp"
-                android:text="@string/score_txt"
-                android:textColor="@color/cyan"
-                android:textSize="20sp" />
+                android:background="@color/white"
+                android:src="@drawable/ic_coins" />
         </LinearLayout>
 
         <TextView
