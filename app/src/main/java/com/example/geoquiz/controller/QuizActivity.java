@@ -39,12 +39,14 @@ public class QuizActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_CHEAT = 0;
     public static final int REQUEST_CODE_SETTING = 1;
     public static final String FLAG = "flag";
+    public static final String EXTRA_BACKGROUND_COLOR = "backgroundColor";
     private boolean flag;
     private String mAppName;
+    private String mColor = "WHITE";
 
     private ImageButton mImageButtonNext, mImageButtonPrev, mImageButtonFirst, mImageButtonLast,
             mImageButtonReset, mImageButtonSetting, mImageButtonLogOut, mImageButtonCheat,
-            mImageButtonTrue,mImageButtonFalse;
+            mImageButtonTrue, mImageButtonFalse;
     private TextView mTextViewQuestion, mScoreNumber, mScoreNumberGameOver;
     private String mScoreValue = "0";
     private FrameLayout mLinearLayoutMain;
@@ -52,8 +54,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
     private Question[] mQuestionBank = setQuestion();
-    boolean[] mBooleansBtn = {false,false,false,false,false,false,false};
-    private Setting mSetting = new Setting(mBooleansBtn,"Medium","White");
+    boolean[] mBooleansBtn = {false, false, false, false, false, false, false};
+    private Setting mSetting = new Setting(mBooleansBtn, "Medium", "White");
 
 
     /**
@@ -156,8 +158,8 @@ public class QuizActivity extends AppCompatActivity {
         outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, mQuestionBank);
         outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
         outState.putString(BUNDLE_KEY_SCORE_NUMBER, mScoreNumber.getText().toString());
-        outState.putSerializable(BUNDLE_KEY_SETTING,mSetting);
-        outState.putBoolean(FLAG,flag);
+        outState.putSerializable(BUNDLE_KEY_SETTING, mSetting);
+        outState.putBoolean(FLAG, flag);
     }
 
     @Override
@@ -278,7 +280,8 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
                 intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
-                intent.putExtra(EXTRA_APP_TITLE_FOR_CHEAT,mAppName);
+                intent.putExtra(EXTRA_APP_TITLE_FOR_CHEAT, mAppName);
+                intent.putExtra(EXTRA_BACKGROUND_COLOR, mColor);
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
                 updateSetting();
 //                startActivity(intent);
@@ -289,7 +292,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(QuizActivity.this, SettingActivity.class);
                 intent.putExtra(EXTRA_SETTING_STATUS, mSetting);
-                intent.putExtra(EXTRA_APP_TITLE_FOR_SETTING,mAppName);
+                intent.putExtra(EXTRA_APP_TITLE_FOR_SETTING, mAppName);
                 startActivityForResult(intent, REQUEST_CODE_SETTING);
             }
         });
@@ -309,17 +312,31 @@ public class QuizActivity extends AppCompatActivity {
 
     private void updateBackgroundColor() {
         if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_RED")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_red);
+            setBackgroundColor(R.color.light_red);
+            mColor = "LIGHT_RED";
+        } else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_BLUE")) {
+            setBackgroundColor(R.color.light_blue);
+            mColor = "LIGHT_BLUE";
+        } else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_GREEN")) {
+            setBackgroundColor(R.color.light_green);
+            mColor = "LIGHT_GREEN";
+        } else {
+            setBackgroundColor(R.color.white);
+            mColor = "WHITE";
         }
-        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_BLUE")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_blue);
-        }
-        else if (mSetting.getBackgroundColor().equalsIgnoreCase("LIGHT_GREEN")) {
-            mLinearLayoutMain.setBackgroundResource(R.color.light_green);
-        }
-        else {
-            mLinearLayoutMain.setBackgroundResource(R.color.white);
-        }
+    }
+
+    private void setBackgroundColor(int p) {
+        mLinearLayoutMain.setBackgroundResource(p);
+        mImageButtonSetting.setBackgroundResource(p);
+        mImageButtonCheat.setBackgroundResource(p);
+        mImageButtonLogOut.setBackgroundResource(p);
+        mImageButtonTrue.setBackgroundResource(p);
+        mImageButtonFalse.setBackgroundResource(p);
+        mImageButtonNext.setBackgroundResource(p);
+        mImageButtonPrev.setBackgroundResource(p);
+        mImageButtonFirst.setBackgroundResource(p);
+        mImageButtonLast.setBackgroundResource(p);
     }
 
     private void updateSize() {
@@ -391,7 +408,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void checkDisableBtn() {
-        if (!mSetting.getHideButtons()[0]  && !mSetting.getHideButtons()[1]){
+        if (!mSetting.getHideButtons()[0] && !mSetting.getHideButtons()[1]) {
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
                 mImageButtonFalse.setEnabled(true);
                 mImageButtonTrue.setEnabled(true);
@@ -399,7 +416,7 @@ public class QuizActivity extends AppCompatActivity {
                 mImageButtonFalse.setEnabled(false);
                 mImageButtonTrue.setEnabled(false);
             }
-        }else if (!mSetting.getHideButtons()[0]){
+        } else if (!mSetting.getHideButtons()[0]) {
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
                 mImageButtonTrue.setEnabled(true);
             } else {
@@ -407,7 +424,7 @@ public class QuizActivity extends AppCompatActivity {
                 mImageButtonTrue.setEnabled(false);
             }
 
-        }else if (!mSetting.getHideButtons()[1]){
+        } else if (!mSetting.getHideButtons()[1]) {
             if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
                 mImageButtonFalse.setEnabled(true);
             } else {
@@ -423,12 +440,29 @@ public class QuizActivity extends AppCompatActivity {
             mScoreNumberGameOver.setText(mScoreNumber.getText());
             mLinearLayoutMain.setVisibility(View.GONE);
             mLinearLayoutGameOver.setVisibility(View.VISIBLE);
+            setGameOverColor();
         } else {
             int questionTextResId = mQuestionBank[mCurrentIndex].getQuestionTextResId();
             mTextViewQuestion.setTextColor(Color.BLACK);
             mTextViewQuestion.setText(questionTextResId);
         }
 
+    }
+
+    private void setGameOverColor() {
+        if (mColor.equals("LIGHT_RED")) {
+            mLinearLayoutGameOver.setBackgroundResource(R.color.light_red);
+            mImageButtonReset.setBackgroundResource(R.color.light_red);
+        } else if (mColor.equals("LIGHT_BLUE")) {
+            mLinearLayoutGameOver.setBackgroundResource(R.color.light_blue);
+            mImageButtonReset.setBackgroundResource(R.color.light_blue);
+        } else if (mColor.equals("LIGHT_GREEN")) {
+            mLinearLayoutGameOver.setBackgroundResource(R.color.light_green);
+            mImageButtonReset.setBackgroundResource(R.color.light_green);
+        } else {
+            mLinearLayoutGameOver.setBackgroundResource(R.color.white);
+            mImageButtonReset.setBackgroundResource(R.color.white);
+        }
     }
 
     private void checkAnswer(boolean userPressed) {

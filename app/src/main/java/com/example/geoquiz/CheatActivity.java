@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.geoquiz.controller.QuizActivity;
@@ -19,12 +20,14 @@ public class CheatActivity extends AppCompatActivity {
     public static final String BUNDLE_KEY_ANSWER_DISABLE = "CheatAnswerDisable";
 
     private ImageButton mImageButtonBack, mImageButtonShowAnswer;
+    private LinearLayout mLinearLayoutCheat;
     private TextView mTextViewAnswer;
     private boolean mButtonShowAnswerDisable = false;
     private boolean mIsAnswerTrue;
     private boolean mCheck = false;
     private String mAnswerTxt = "";
     private String mTitle;
+    private String mBackgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +44,37 @@ public class CheatActivity extends AppCompatActivity {
 
         mTitle = getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
         setTitle(mTitle);
+        mBackgroundColor = getIntent().getStringExtra(QuizActivity.EXTRA_BACKGROUND_COLOR);
+
         if (mCheck)
             setShownAnswerResult(mCheck);
         mIsAnswerTrue = getIntent().getBooleanExtra(QuizActivity.EXTRA_QUESTION_ANSWER, false);
         findViews();
+        setBackColor();
         setDisable(mButtonShowAnswerDisable);
         mTextViewAnswer.setText(mAnswerTxt);
         setListeners();
+    }
+
+    private void setBackColor() {
+        if (mBackgroundColor.equals("LIGHT_RED")) {
+            setColor(R.color.light_red);
+        }
+        else if (mBackgroundColor.equals("LIGHT_BLUE")) {
+            setColor(R.color.light_blue);
+        }
+        else if (mBackgroundColor.equals("LIGHT_GREEN")) {
+            setColor(R.color.light_green);
+        }
+        else {
+            setColor(R.color.white);
+        }
+    }
+
+    private void setColor(int p) {
+        mLinearLayoutCheat.setBackgroundResource(p);
+        mImageButtonBack.setBackgroundResource(p);
+        mImageButtonShowAnswer.setBackgroundResource(p);
     }
 
     @Override
@@ -94,6 +121,7 @@ public class CheatActivity extends AppCompatActivity {
         mImageButtonShowAnswer = findViewById(R.id.btn_show_answer);
         mTextViewAnswer = findViewById(R.id.txtview_answer);
         mImageButtonBack = findViewById(R.id.btn_back);
+        mLinearLayoutCheat = findViewById(R.id.cheatLayout);
 
     }
 

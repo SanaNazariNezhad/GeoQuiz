@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cheatLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/white"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".CheatActivity">
 
@@ -13,8 +14,8 @@
         android:id="@+id/txtview_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="8dp"
+        android:padding="8dp"
         android:text="@string/txt_warning"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
@@ -23,9 +24,9 @@
         android:id="@+id/txtview_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
         android:padding="15dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         tools:text="درست" />
 
     <LinearLayout
