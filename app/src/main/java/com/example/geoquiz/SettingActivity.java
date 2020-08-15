@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
-import com.example.geoquiz.controller.QuizActivity;
+import com.example.geoquiz.controller.QuizFragment;
 import com.example.geoquiz.model.Setting;
 
 public class SettingActivity extends AppCompatActivity {
@@ -44,8 +44,8 @@ public class SettingActivity extends AppCompatActivity {
 
 
         setTitle(R.string.setting);
-        mBackgroundColor = getIntent().getStringExtra(QuizActivity.EXTRA_BACKGROUND_COLOR);
-        mSetting =(Setting) getIntent().getSerializableExtra(QuizActivity.EXTRA_SETTING_STATUS);
+        mBackgroundColor = getIntent().getStringExtra(QuizFragment.EXTRA_BACKGROUND_COLOR);
+        mSetting =(Setting) getIntent().getSerializableExtra(QuizFragment.EXTRA_SETTING_STATUS);
 
         findViews();
         setBackColor();
