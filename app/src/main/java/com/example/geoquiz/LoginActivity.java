@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.geoquiz.controller.QuizActivity;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,10 +25,14 @@ public class LoginActivity extends AppCompatActivity {
     public static final String BUNDLE_KEY_USERNAME = "UserBundle";
     public static final String BUNDLE_KEY_PASSWORD = "passBundle";
     private Button mButtonLogin,mButtonSignUp;
-    private EditText mEditTextUsername,mEditTextPassword;
     public static final int REQUEST_CODE_SIGN_UP = 0;
     private String user, pass;
     private ViewGroup mViewGroupRootLayout;
+
+    private TextInputLayout mUsernameForm;
+    private TextInputLayout mPasswordForm;
+    private TextInputEditText mUsername;
+    private TextInputEditText mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +62,12 @@ public class LoginActivity extends AppCompatActivity {
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
         if (requestCode == REQUEST_CODE_SIGN_UP) {
-            mEditTextUsername.setText(data.getStringExtra(SignUpActivity.EXTRA_USERNAME_SIGN_UP));
-            mEditTextPassword.setText(data.getStringExtra(SignUpActivity.EXTRA_PASSWORD_SIGN_UP));
+            mUsername.setText(data.getStringExtra(SignUpActivity.EXTRA_USERNAME_SIGN_UP));
+            mPassword.setText(data.getStringExtra(SignUpActivity.EXTRA_PASSWORD_SIGN_UP));
             user = data.getStringExtra(SignUpActivity.EXTRA_USERNAME_SIGN_UP);
             pass = data.getStringExtra(SignUpActivity.EXTRA_PASSWORD_SIGN_UP);
+            mUsernameForm.setErrorEnabled(false);
+            mPasswordForm.setErrorEnabled(false);
         }
     }
 
@@ -67,15 +75,26 @@ public class LoginActivity extends AppCompatActivity {
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mEditTextPassword.getText().toString().equals("") || mEditTextUsername.getText().toString().equals("")){
-                    callToast(R.string.toast_sign_up);
+                mUsernameForm.setErrorEnabled(false);
+                mPasswordForm.setErrorEnabled(false);
+                if (mUsername.getText().toString().trim().isEmpty() && mPassword.getText().toString().trim().isEmpty()) {
+                    mUsernameForm.setErrorEnabled(true);
+                    mUsernameForm.setError("Field cannot be empty!");
+                    mPasswordForm.setErrorEnabled(true);
+                    mPasswordForm.setError("Field cannot be empty!");
+                }else if (mUsername.getText().toString().trim().isEmpty()){
+                    mUsernameForm.setErrorEnabled(true);
+                    mUsernameForm.setError("Field cannot be empty!");
+                }else if (mPassword.getText().toString().trim().isEmpty()){
+                    mPasswordForm.setErrorEnabled(true);
+                    mPasswordForm.setError("Field cannot be empty!");
                 }
-                else if (!mEditTextUsername.getText().toString().equals(user) ||
-                        !mEditTextPassword.getText().toString().equals(pass)){
+                else if (!mUsername.getText().toString().equals(user) ||
+                        !mPassword.getText().toString().equals(pass)){
                     callToast(R.string.toast_login);
                 }else {
                     Intent intent = new Intent(LoginActivity.this, QuizActivity.class);
-                    intent.putExtra(EXTRA_APP_TITLE,mEditTextUsername.getText().toString());
+                    intent.putExtra(EXTRA_APP_TITLE,mUsername.getText().toString());
                     startActivity(intent);
                 }
 
@@ -85,9 +104,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
-                if (!mEditTextPassword.getText().toString().equals("") && !mEditTextUsername.getText().toString().equals("")) {
-                    intent.putExtra(EXTRA_USERNAME,mEditTextUsername.getText().toString());
-                    intent.putExtra(EXTRA_PASSWORD,mEditTextPassword.getText().toString());
+                if (!mPassword.getText().toString().equals("") || !mUsername.getText().toString().equals("")) {
+                    intent.putExtra(EXTRA_USERNAME,mUsername.getText().toString());
+                    intent.putExtra(EXTRA_PASSWORD,mPassword.getText().toString());
                 }
                 startActivityForResult(intent,REQUEST_CODE_SIGN_UP);
             }
@@ -102,8 +121,10 @@ public class LoginActivity extends AppCompatActivity {
     private void findViews() {
         mButtonLogin = findViewById(R.id.btnLogin_Login);
         mButtonSignUp = findViewById(R.id.btnSignUp_Login);
-        mEditTextPassword = findViewById(R.id.editTextPasswordLogin);
-        mEditTextUsername = findViewById(R.id.editTextUsernameLogin);
+        mUsernameForm = findViewById(R.id.username_form_login);
+        mPasswordForm = findViewById(R.id.password_form_login);
+        mUsername = findViewById(R.id.username_login);
+        mPassword = findViewById(R.id.password_login);
         mViewGroupRootLayout = findViewById(R.id.rootLayout);
     }
 }
