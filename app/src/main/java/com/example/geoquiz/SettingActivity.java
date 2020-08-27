@@ -32,7 +32,7 @@ public class SettingActivity extends AppCompatActivity {
     private RadioButton mRadioBtnLightGreen;
     private RadioButton mRadioBtnWhite;
 
-    private FrameLayout mLinearLayoutSetting;
+    private FrameLayout mFrameLayoutSetting;
 
     private Setting mSetting;
     private String mBackgroundColor;
@@ -69,7 +69,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setColor(int p) {
-        mLinearLayoutSetting.setBackgroundResource(p);
+        mFrameLayoutSetting.setBackgroundResource(p);
         mImageButtonSave.setBackgroundResource(p);
         mImageButtonDiscard.setBackgroundResource(p);
     }
@@ -233,7 +233,7 @@ public class SettingActivity extends AppCompatActivity {
         mRadioBtnWhite = findViewById(R.id.radioBtnWhite);
         mImageButtonSave = findViewById(R.id.btnSave);
         mImageButtonDiscard = findViewById(R.id.btnDiscard);
-        mLinearLayoutSetting = findViewById(R.id.layout_setting);
+        mFrameLayoutSetting = findViewById(R.id.layout_setting);
 
     }
 

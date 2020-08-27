@@ -43,9 +43,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_form_login"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginTop="16dp"
                 android:hint="Password"
                 app:passwordToggleEnabled="true">
@@ -62,18 +62,26 @@
 
     </androidx.cardview.widget.CardView>
 
-
-    <Button
-        android:id="@+id/btnLogin_Login"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/login" />
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSignUp_Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up" />
+        <Button
+            android:id="@+id/btnLogin_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/btnSignUp_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="@string/sign_up" />
+    </LinearLayout>
+
 
 </LinearLayout>

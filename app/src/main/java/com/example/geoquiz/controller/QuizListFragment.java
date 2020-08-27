@@ -25,6 +25,7 @@ import java.util.List;
 public class QuizListFragment extends Fragment {
 
     public static final String EXTRA_QUESTION_ID = "question_id";
+    public static final String EXTRA_TITLE_APP = "titleApp";
     private String mAppName;
 
     private RecyclerView mRecyclerView;
@@ -88,6 +89,7 @@ public class QuizListFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), QuizActivity.class);
                     intent.putExtra(EXTRA_QUESTION_ID, mQuestion.getId());
+                    intent.putExtra(EXTRA_TITLE_APP,mAppName);
                     startActivity(intent);
                 }
             });

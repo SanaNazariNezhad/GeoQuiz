@@ -95,6 +95,7 @@ public class QuizFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mCurrentIndex = getActivity().getIntent().getIntExtra(QuizListFragment.EXTRA_QUESTION_ID,0);
         if (savedInstanceState != null) {
             Log.d(TAG, "savedInstanceState: " + savedInstanceState);
             mQuestionBank = (List<Question>) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
@@ -107,10 +108,9 @@ public class QuizFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        mAppName = getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
+        mAppName = getActivity().getIntent().getStringExtra(QuizListFragment.EXTRA_TITLE_APP);
         getActivity().setTitle(mAppName);
         findViews(view);
-        mCurrentIndex = getActivity().getIntent().getIntExtra(QuizListFragment.EXTRA_QUESTION_ID,0);
         mScoreNumber.setText(mScoreValue);
         setListeners();
         updateQuestion();

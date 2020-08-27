@@ -31,12 +31,6 @@ public class QuizRepository {
         mQuestions.add(new Question(R.string.question_africa, true,++id));
         mQuestions.add(new Question(R.string.question_americas, false,++id));
         mQuestions.add(new Question(R.string.question_asia, false,++id));
-        mQuestions.add(new Question(R.string.question_australia, false,++id));
-        mQuestions.add(new Question(R.string.question_oceans, true,++id));
-        mQuestions.add(new Question(R.string.question_mideast, false,++id));
-        mQuestions.add(new Question(R.string.question_africa, true,++id));
-        mQuestions.add(new Question(R.string.question_americas, false,++id));
-        mQuestions.add(new Question(R.string.question_asia, false,++id));
 
     }
 
