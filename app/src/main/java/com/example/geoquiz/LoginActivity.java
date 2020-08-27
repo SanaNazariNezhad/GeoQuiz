@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.geoquiz.controller.QuizActivity;
+import com.example.geoquiz.controller.QuizListActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         !mPassword.getText().toString().equals(pass)){
                     callToast(R.string.toast_login);
                 }else {
-                    Intent intent = new Intent(LoginActivity.this, QuizActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, QuizListActivity.class);
                     intent.putExtra(EXTRA_APP_TITLE,mUsername.getText().toString());
                     startActivity(intent);
                 }

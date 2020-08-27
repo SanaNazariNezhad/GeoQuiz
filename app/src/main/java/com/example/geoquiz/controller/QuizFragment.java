@@ -29,6 +29,11 @@ import com.example.geoquiz.SettingActivity;
 import com.example.geoquiz.controller.QuizActivity;
 import com.example.geoquiz.model.Question;
 import com.example.geoquiz.model.Setting;
+import com.example.geoquiz.repository.QuizRepository;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuizFragment extends Fragment {
@@ -57,7 +62,10 @@ public class QuizFragment extends Fragment {
     private FrameLayout mLinearLayoutGameOver;
 
     private int mCurrentIndex = 0;
-    private Question[] mQuestionBank;
+    private QuizRepository mQuizRepository = QuizRepository.getInstance();
+    private List<Question> mQuestionBank = mQuizRepository.getQuestions();
+
+//    private Question[] mQuestionBank;
     boolean[] mBooleansBtn = {false, false, false, false, false, false, false};
     private Setting mSetting;
 
@@ -89,7 +97,7 @@ public class QuizFragment extends Fragment {
                              Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             Log.d(TAG, "savedInstanceState: " + savedInstanceState);
-            mQuestionBank = (Question[]) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
+            mQuestionBank = (List<Question>) savedInstanceState.getSerializable(BUNDLE_KEY_QUESTION_BANK);
             mCurrentIndex = savedInstanceState.getInt(BUNDLE_KEY_CURRENT_INDEX, 0);
             mScoreValue = savedInstanceState.getString(BUNDLE_KEY_SCORE_NUMBER);
             mSetting = (Setting) savedInstanceState.getSerializable(BUNDLE_KEY_SETTING);
@@ -102,6 +110,7 @@ public class QuizFragment extends Fragment {
         mAppName = getActivity().getIntent().getStringExtra(LoginActivity.EXTRA_APP_TITLE);
         getActivity().setTitle(mAppName);
         findViews(view);
+        mCurrentIndex = getActivity().getIntent().getIntExtra(QuizListFragment.EXTRA_QUESTION_ID,0);
         mScoreNumber.setText(mScoreValue);
         setListeners();
         updateQuestion();
@@ -122,7 +131,7 @@ public class QuizFragment extends Fragment {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: " + mCurrentIndex);
 
-        outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, mQuestionBank);
+        outState.putSerializable(BUNDLE_KEY_QUESTION_BANK, (Serializable) mQuestionBank);
         outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
         outState.putString(BUNDLE_KEY_SCORE_NUMBER, mScoreNumber.getText().toString());
         outState.putSerializable(BUNDLE_KEY_SETTING, mSetting);
@@ -136,7 +145,7 @@ public class QuizFragment extends Fragment {
         if (resultCode != Activity.RESULT_OK || data == null)
             return;
         if (requestCode == REQUEST_CODE_CHEAT) {
-            mQuestionBank[mCurrentIndex].setCheater(data.getBooleanExtra(CheatFragment.EXTRA_IS_CHEAT, false));
+            mQuestionBank.get(mCurrentIndex).setCheater(data.getBooleanExtra(CheatFragment.EXTRA_IS_CHEAT, false));
             checkDisableBtn();
         } else if (requestCode == REQUEST_CODE_SETTING) {
             Bundle bundle = data.getExtras();
@@ -188,7 +197,7 @@ public class QuizFragment extends Fragment {
         mImageButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.size();
                 updateQuestion();
                 updateSetting();
                 checkDisableBtn();
@@ -199,7 +208,7 @@ public class QuizFragment extends Fragment {
         mImageButtonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.length) % mQuestionBank.length;
+                mCurrentIndex = (mCurrentIndex - 1 + mQuestionBank.size()) % mQuestionBank.size();
                 updateQuestion();
                 updateSetting();
                 checkDisableBtn();
@@ -221,7 +230,7 @@ public class QuizFragment extends Fragment {
         mImageButtonLast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = mQuestionBank.length - 1;
+                mCurrentIndex = mQuestionBank.size() - 1;
                 updateQuestion();
                 updateSetting();
                 checkDisableBtn();
@@ -248,7 +257,7 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CheatActivity.class);
-                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank[mCurrentIndex].isAnswerTrue());
+                intent.putExtra(EXTRA_QUESTION_ANSWER, mQuestionBank.get(mCurrentIndex).isAnswerTrue());
                 intent.putExtra(EXTRA_BACKGROUND_COLOR, mColor);
                 startActivityForResult(intent, REQUEST_CODE_CHEAT);
                 updateSetting();
@@ -355,22 +364,15 @@ public class QuizFragment extends Fragment {
             mImageButtonCheat.setEnabled(true);
     }
 
-    public Question[] setQuestion() {
-        Question[] mQuestionBank = {
-                new Question(R.string.question_australia, false),
-                new Question(R.string.question_oceans, true),
-                new Question(R.string.question_mideast, false),
-                new Question(R.string.question_africa, true),
-                new Question(R.string.question_americas, false),
-                new Question(R.string.question_asia, false)
-        };
+    public List<Question> setQuestion() {
+        mQuestionBank = mQuizRepository.getQuestions();
         return mQuestionBank;
     }
 
     private void checkBtn(boolean b) {
-        if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+        if (mQuestionBank.get(mCurrentIndex).isDisableBtn() == 0) {
             checkAnswer(b);
-            mQuestionBank[mCurrentIndex].setDisableBtn(1);
+            mQuestionBank.get(mCurrentIndex).setDisableBtn(1);
             mImageButtonFalse.setEnabled(false);
             mImageButtonTrue.setEnabled(false);
         }
@@ -378,7 +380,7 @@ public class QuizFragment extends Fragment {
 
     private void checkDisableBtn() {
         if (!mSetting.getHideButtons()[0] && !mSetting.getHideButtons()[1]) {
-            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+            if (mQuestionBank.get(mCurrentIndex).isDisableBtn() == 0) {
                 mImageButtonFalse.setEnabled(true);
                 mImageButtonTrue.setEnabled(true);
             } else {
@@ -386,7 +388,7 @@ public class QuizFragment extends Fragment {
                 mImageButtonTrue.setEnabled(false);
             }
         } else if (!mSetting.getHideButtons()[0]) {
-            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+            if (mQuestionBank.get(mCurrentIndex).isDisableBtn() == 0) {
                 mImageButtonTrue.setEnabled(true);
             } else {
                 mImageButtonFalse.setEnabled(false);
@@ -394,7 +396,7 @@ public class QuizFragment extends Fragment {
             }
 
         } else if (!mSetting.getHideButtons()[1]) {
-            if (mQuestionBank[mCurrentIndex].isDisableBtn() == 0) {
+            if (mQuestionBank.get(mCurrentIndex).isDisableBtn() == 0) {
                 mImageButtonFalse.setEnabled(true);
             } else {
                 mImageButtonFalse.setEnabled(false);
@@ -405,13 +407,13 @@ public class QuizFragment extends Fragment {
     }
 
     private void updateQuestion() {
-        if (Question.mNumberOfAnsweredQuestion == mQuestionBank.length) {
+        if (Question.mNumberOfAnsweredQuestion == mQuestionBank.size()) {
             mScoreNumberGameOver.setText(mScoreNumber.getText());
             mLinearLayoutMain.setVisibility(View.GONE);
             mLinearLayoutGameOver.setVisibility(View.VISIBLE);
             setGameOverColor();
         } else {
-            int questionTextResId = mQuestionBank[mCurrentIndex].getQuestionTextResId();
+            int questionTextResId = mQuestionBank.get(mCurrentIndex).getQuestionTextResId();
             mTextViewQuestion.setTextColor(Color.BLACK);
             mTextViewQuestion.setText(questionTextResId);
         }
@@ -440,10 +442,10 @@ public class QuizFragment extends Fragment {
     }
 
     private void checkAnswer(boolean userPressed) {
-        if (mQuestionBank[mCurrentIndex].isCheater()) {
+        if (mQuestionBank.get(mCurrentIndex).isCheater()) {
             callToast(R.string.judgment_toast, R.color.red, Gravity.BOTTOM, R.drawable.ic_baseline_cancel, 16).show();
         } else {
-            if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
+            if (mQuestionBank.get(mCurrentIndex).isAnswerTrue() == userPressed) {
                 callToast(R.string.toast_correct, R.color.green, Gravity.BOTTOM, R.drawable.ic_baseline_check_circle, 16).show();
                 mTextViewQuestion.setTextColor(getResources().getColor(R.color.green));
                 CharSequence scoreChar = mScoreNumber.getText();
