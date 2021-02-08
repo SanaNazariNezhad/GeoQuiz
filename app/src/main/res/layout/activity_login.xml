@@ -32,8 +32,7 @@
                 android:hint="Username"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
-                app:errorEnabled="true"
-                app:helperText="*Required">
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username_login"
